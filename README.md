@@ -1,17 +1,19 @@
-# Scg-noti-final
 # SCG NOTI – Apple‑Level Secure Web App (README)
 
-> **Goal:** ระบบแจ้งเตือน & จัดการงานภายใน SCG ที่มีความปลอดภัยระดับ Apple‑level\
+> **Goal:** ระบบแจ้งเตือน & จัดการงานภายใน SCG ที่มีความปลอดภัยระดับ Apple‑level  
 > **Stack:** React TSX + Tailwind • Express + Prisma (SQL Server) • Redis + BullMQ • Docker • pnpm mono‑repo
 
 ---
 
 ## 🗂️ สารบัญ
 1. [แผนงาน & สถานะ](#แผนงาน--สถานะ)
-2. [โครงสร้างโฟลเดอร์](#โครงสร้างโฟลเดอร์)
-3. [เครื่องมือที่ใช้](#เครื่องมือที่ใช้)
-4. [คู่มือเซ็ตอัป (Dev)](#คู่มือเซ็ตอัป-dev)
-5. [สคริปต์สำคัญ](#สคริปต์สำคัญ)
+2. [Security Backlog รายละเอียด](#security-backlog-รายละเอียด)
+3. [โครงสร้างโฟลเดอร์](#โครงสร้างโฟลเดอร์)
+4. [เครื่องมือที่ใช้](#เครื่องมือที่ใช้)
+5. [ไฟล์ .env ตัวอย่าง](#ไฟล์-env-ตัวอย่าง)
+6. [Docker‑compose (Dev Infra)](#docker-compose-dev-infra)
+7. [คู่มือเซ็ตอัป (Dev)](#คู่มือเซ็ตอัป-dev)
+8. [สคริปต์ pnpm ที่ใช้บ่อย](#สคริปต์-pnpm-ที่ใช้บ่อย)
 
 ---
 
@@ -19,31 +21,30 @@
 
 | Phase | หมวดงาน | งานย่อย (✅ = เสร็จ) |
 |-------|---------|-----------------------|
-| **🚀 Phase A – Core Foundation** | • Scaffold repo + pnpm workspace ✅<br>• Express + TS backend ✅<br>• Prisma schema (User+SessionGuard) ✅<br>• Auth Flow (login/refresh/logout) ⏳<br>• Security middleware: Helmet, CORS, rate‑limit ⏳<br>• Redis session store ⏳<br>• React TSX + Tailwind scaffold ✅<br>• AuthContext + ProtectedRoute ⏳ | *เป้าหมาย*: ระบบล็อกอินทำงาน end‑to‑end |
-| **🟧 Phase B – Feature & Security** | • Dashboard vertical slice ⏳<br>• Notifications CRUD ⏳<br>• Approvals module ⏳<br>• Work Calendar ⏳<br>• Settings 7 แท็บ ⏳<br>• CSRF double‑submit ⏳<br>• Account Lockout (×5) ⏳<br>• Refresh‑token rotation job ⏳ | *เริ่มหลัง Phase A* |
-| **🟩 Phase C – Scale & Nice‑to‑Have** | • 2FA (TOTP / LINE OTP) ⏳<br>• Device fingerprint trust list ⏳<br>• IP allow‑list per role ⏳<br>• Webhook retry log ⏳<br>• Prometheus / Grafana / Loki ⏳<br>• k8s Helm chart ⏳ | *ทำเมื่อ traffic โต* |
+| **🚀 Phase A – Core Foundation** | • Scaffold repo + pnpm workspace ✅<br>• Express + TS backend ✅<br>• Prisma schema (User+SessionGuard) ✅<br>• Auth Flow (login/refresh/logout) ⏳<br>• Security middleware (Helmet/CORS/rate‑limit) ⏳<br>• Redis session store ⏳<br>• React TSX + Tailwind scaffold ✅<br>• AuthContext + ProtectedRoute ⏳ |
+| **🟧 Phase B – Feature & Security** | • Dashboard vertical slice ⏳<br>• Notifications CRUD ⏳<br>• Approvals module ⏳<br>• Work Calendar ⏳<br>• Settings 7 แท็บ ⏳<br>• CSRF double‑submit ⏳<br>• Account Lockout (×5) ⏳<br>• Refresh‑token rotation job ⏳ |
+| **🟩 Phase C – Scale & Nice‑to‑Have** | • 2FA (TOTP / LINE OTP) ⏳<br>• Device fingerprint trust list ⏳<br>• IP allow‑list per role ⏳<br>• Webhook retry log ⏳<br>• Prometheus / Grafana / Loki ⏳<br>• k8s Helm chart ⏳ |
 
+---
 
 ## Security Backlog รายละเอียด
 
 | # | Feature | สถานะ | หมายเหตุ |
 |---|---------|-------|----------|
-| 1 | Refresh‑token **rotation 15 min** | ⏳ | BullMQ job + `currentRefreshId` |
-| 2 | **IP binding** กับ session | ⏳ | compare `req.ip` ทุก `/me` |
-| 3 | **Account lockout** ≥5 fails | ⏳ | set `status = LOCKED` |
-| 4 | **CSRF** double‑submit token | ⏳ | `csurf` middleware |
-| 5 | Security headers (Helmet) | ⏳ | `app.use(helmet())` |
-| 6 | **Audit Log** Prisma model | ⏳ | action, ip, ua, statusCode |
-| 7 | **2FA** (TOTP / LINE OTP) | ⏳ | phase C |
-| 8 | Device **fingerprint** binding | ⏳ | UA+platform hash |
+| 1 | Refresh‑token rotation 15 min | ⏳ | BullMQ job + `currentRefreshId` |
+| 2 | IP binding กับ session | ⏳ | compare `req.ip` ทุก `/me` |
+| 3 | Account lockout ≥5 fails | ⏳ | `status = LOCKED` |
+| 4 | CSRF double‑submit token | ⏳ | `csurf` middleware |
+| 5 | Security headers (Helmet) | ⏳ | `app.use(helmet())` |
+| 6 | Audit Log Prisma model | ⏳ | action, ip, ua, status |
+| 7 | 2FA (TOTP / LINE OTP) | ⏳ | phase C |
+| 8 | Device fingerprint binding | ⏳ | UA+platform hash |
 | 9 | Secure session recovery | ⏳ | backup codes / OTP |
-| 10| **Anomaly detection** alert | ⏳ | IP/device change → notify admin |
+|10 | Anomaly detection alert | ⏳ | IP/device change →
 
 ---
 
-
 ## 🗂️ โครงสร้างโฟลเดอร์
-
 ```text
 scg-noti/
 ├── backend/
@@ -102,7 +103,7 @@ scg-noti/
 │
 └── docs/                      # ADR, API spec (OpenAPI), ER‑diagram
 
-
+```
 #### เครื่องมือที่ใช้
 
 | Layer | Tool | Purpose |
