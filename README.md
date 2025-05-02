@@ -23,6 +23,22 @@
 | **🟧 Phase B – Feature & Security** | • Dashboard vertical slice ⏳<br>• Notifications CRUD ⏳<br>• Approvals module ⏳<br>• Work Calendar ⏳<br>• Settings 7 แท็บ ⏳<br>• CSRF double‑submit ⏳<br>• Account Lockout (×5) ⏳<br>• Refresh‑token rotation job ⏳ | *เริ่มหลัง Phase A* |
 | **🟩 Phase C – Scale & Nice‑to‑Have** | • 2FA (TOTP / LINE OTP) ⏳<br>• Device fingerprint trust list ⏳<br>• IP allow‑list per role ⏳<br>• Webhook retry log ⏳<br>• Prometheus / Grafana / Loki ⏳<br>• k8s Helm chart ⏳ | *ทำเมื่อ traffic โต* |
 
+
+## Security Backlog รายละเอียด
+
+| # | Feature | สถานะ | หมายเหตุ |
+|---|---------|-------|----------|
+| 1 | Refresh‑token **rotation 15 min** | ⏳ | BullMQ job + `currentRefreshId` |
+| 2 | **IP binding** กับ session | ⏳ | compare `req.ip` ทุก `/me` |
+| 3 | **Account lockout** ≥5 fails | ⏳ | set `status = LOCKED` |
+| 4 | **CSRF** double‑submit token | ⏳ | `csurf` middleware |
+| 5 | Security headers (Helmet) | ⏳ | `app.use(helmet())` |
+| 6 | **Audit Log** Prisma model | ⏳ | action, ip, ua, statusCode |
+| 7 | **2FA** (TOTP / LINE OTP) | ⏳ | phase C |
+| 8 | Device **fingerprint** binding | ⏳ | UA+platform hash |
+| 9 | Secure session recovery | ⏳ | backup codes / OTP |
+| 10| **Anomaly detection** alert | ⏳ | IP/device change → notify admin |
+
 ---
 
 ## โครงสร้างโฟลเดอร์
