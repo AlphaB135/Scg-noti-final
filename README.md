@@ -50,7 +50,7 @@ scg-noti/
 │  │  ├─ config/            # env, logger, helmet, rate‑limit
 │  │  ├─ prisma/            # schema.prisma, migrations/
 │  │  ├─ middleware/
-│  │  │   ├─ auth/
+│  │  │   ├─ auth/          # guards, refresh‑check
 │  │  │   ├─ csrf.ts
 │  │  │   └─ auditLog.ts
 │  │  ├─ modules/
@@ -100,7 +100,6 @@ scg-noti/
 │  └─ vite.config.ts
 │
 └─ docs/                    # ADR, API spec (OpenAPI), ER‑diagram
----
 
 ## เครื่องมือที่ใช้
 
