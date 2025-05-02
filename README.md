@@ -43,64 +43,65 @@
 
 ## โครงสร้างโฟลเดอร์
 
+## 🗂️ โครงสร้างโฟลเดอร์
 
+```text
 scg-noti/
-├─ backend/
-│  ├─ src/
-│  │  ├─ config/            # env, logger, helmet, rate‑limit
-│  │  ├─ prisma/            # schema.prisma, migrations/
-│  │  ├─ middleware/
-│  │  │   ├─ auth/          # guards, refresh‑check
-│  │  │   ├─ csrf.ts
-│  │  │   └─ auditLog.ts
-│  │  ├─ modules/
-│  │  │   ├─ auth/          # login, refresh, 2FA, lockout
-│  │  │   ├─ notifications/
-│  │  │   ├─ approvals/
-│  │  │   ├─ rpa/
-│  │  │   ├─ auditLogs/
-│  │  │   └─ settings/      # system & user settings
-│  │  ├─ routes/            # express.Router split by module
-│  │  ├─ utils/             # mailer, sms, webhook, hasher
-│  │  ├─ jobs/              # cron / bullmq (rotating token, digest)
-│  │  └─ server.ts
-│  ├─ tests/                # jest / supertest
-│  └─ Dockerfile
+├── backend/
+│   ├── src/
+│   │   ├── config/            # env, logger, helmet, rate‑limit
+│   │   ├── prisma/            # schema.prisma, migrations/
+│   │   ├── middleware/
+│   │   │   ├── auth/          # guards, refresh‑check
+│   │   │   ├── csrf.ts
+│   │   │   └── auditLog.ts
+│   │   ├── modules/
+│   │   │   ├── auth/          # login, refresh, 2FA, lockout
+│   │   │   ├── notifications/
+│   │   │   ├── approvals/
+│   │   │   ├── rpa/
+│   │   │   ├── auditLogs/
+│   │   │   └── settings/      # system & user settings
+│   │   ├── routes/            # express.Router split by module
+│   │   ├── utils/             # mailer, sms, webhook, hasher
+│   │   ├── jobs/              # cron / bullmq (rotating token, digest)
+│   │   └── server.ts
+│   ├── tests/                 # jest / supertest
+│   └── Dockerfile
 │
-├─ frontend/
-│  ├─ src/
-│  │  ├─ lib/
-│  │  │   ├─ real-api.ts    # axios withCredentials = true
-│  │  │   └─ types.ts       # shared TS types
-│  │  ├─ hooks/             # useAuth, useFetch, useGuard
-│  │  ├─ contexts/          # AuthContext, ThemeContext
-│  │  ├─ layouts/           # DashboardLayout, SettingsLayout
-│  │  ├─ pages/
-│  │  │   ├─ dashboard/
-│  │  │   ├─ notifications/
-│  │  │   ├─ approvals/
-│  │  │   ├─ rpa/
-│  │  │   ├─ audit-logs/
-│  │  │   └─ settings/
-│  │  │        ├─ profile.tsx
-│  │  │        ├─ notifications.tsx
-│  │  │        ├─ system.tsx
-│  │  │        ├─ appearance.tsx
-│  │  │        ├─ security.tsx
-│  │  │        ├─ integrations.tsx
-│  │  │        └─ data.tsx
-│  │  ├─ components/
-│  │  │   ├─ ui/            # buttons, cards, modal
-│  │  │   ├─ charts/        # dashboard KPI bars
-│  │  │   ├─ tables/
-│  │  │   └─ calendar/      # WorkCalendar component
-│  │  ├─ routes.tsx         # React‑Router / TanStack
-│  │  └─ main.tsx
-│  ├─ public/
-│  └─ vite.config.ts
+├── frontend/
+│   ├── src/
+│   │   ├── lib/
+│   │   │   ├── real-api.ts    # axios withCredentials = true
+│   │   │   └── types.ts       # shared TS types
+│   │   ├── hooks/             # useAuth, useFetch, useGuard
+│   │   ├── contexts/          # AuthContext, ThemeContext
+│   │   ├── layouts/           # DashboardLayout, SettingsLayout
+│   │   ├── pages/
+│   │   │   ├── dashboard/
+│   │   │   ├── notifications/
+│   │   │   ├── approvals/
+│   │   │   ├── rpa/
+│   │   │   ├── audit-logs/
+│   │   │   └── settings/
+│   │   │        ├── profile.tsx
+│   │   │        ├── notifications.tsx
+│   │   │        ├── system.tsx
+│   │   │        ├── appearance.tsx
+│   │   │        ├── security.tsx
+│   │   │        ├── integrations.tsx
+│   │   │        └── data.tsx
+│   │   ├── components/
+│   │   │   ├── ui/            # buttons, cards, modal
+│   │   │   ├── charts/        # dashboard KPI bars
+│   │   │   ├── tables/
+│   │   │   └── calendar/      # WorkCalendar component
+│   │   ├── routes.tsx         # React‑Router / TanStack
+│   │   └── main.tsx
+│   ├── public/
+│   └── vite.config.ts
 │
-└─ docs/                    # ADR, API spec (OpenAPI), ER‑diagram
-
+└── docs/                      # ADR, API spec (OpenAPI), ER‑diagram
 ## เครื่องมือที่ใช้
 
 | Layer | Tool | Purpose |
