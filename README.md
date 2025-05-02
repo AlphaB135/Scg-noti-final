@@ -128,9 +128,47 @@ REDIS_URL="redis://localhost:6379"
 JWT_SECRET="supersecretjwt"
 NODE_ENV=development
 
+```
+##Docker‑compose (Dev Infra)
+
+version: "3.9"
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: StrongP@ssw0rd
+    ports: ["1433:1433"]
+    volumes: ["mssql_data:/var/opt/mssql"]
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+volumes:
+  mssql_data:
 
 
 
+
+##คู่มือเซ็ตอัป (Dev)
+git clone https://github.com/your-org/scg-noti-final.git
+cd scg-noti-final
+pnpm install                       # ติดตั้งทุก workspace
+
+# เรียกใช้ Docker infra
+cd infra && docker compose up -d && cd ..
+
+# Migrate DB & seed (ถ้ามี)
+pnpm --filter backend prisma migrate dev --name init
+
+# Start dev servers (2 เทอร์มินัล)
+pnpm --filter backend dev      # http://localhost:3001
+pnpm --filter frontend dev     # http://localhost:5173
+
+
+
+##สคริปต์ pnpm ที่ใช้บ่อย
 
 
 
