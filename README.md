@@ -172,3 +172,40 @@ pnpm --filter frontend dev     # http://localhost:5173
 
 
 
+
+
+
+
+
+
+## auth.controller.ts 
+อธิบายโค้ด
+login()
+
+รับ email กับ password
+
+เช็คว่าผู้ใช้มีอยู่หรือไม่ และรหัสผ่านตรงหรือเปล่า
+
+ถ้าผ่าน จะสร้าง JWT แล้วเก็บไว้ใน HttpOnly Cookie (ปลอดภัยกว่า localStorage)
+
+ตอบกลับว่า login สำเร็จ
+
+logout()
+
+ล้าง cookie ชื่อ token เพื่อลบ session
+
+ตอบกลับว่า logout แล้ว
+
+me()
+
+ดึงข้อมูลผู้ใช้จาก req.user.id (ซึ่งต้องมี middleware decode JWT แล้วแนบไว้ก่อนหน้า)
+
+ดึงข้อมูลจากฐานข้อมูลพร้อม adminProfile (กรณีเป็น admin)
+
+ส่งข้อมูลกลับ
+
+
+##pnpm --filter backend exec prisma db seed
+อัพข้อมูลขึ้นdata base 
+
+
